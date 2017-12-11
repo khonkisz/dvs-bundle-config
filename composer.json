@@ -1,5 +1,5 @@
 {
-    "name": "da-vinci-studio/config-bundle",
+    "name": "dvs-bundle/config",
     "description": "Config bundle(Sonata admin)",
     "keywords": ["config"],
     "type": "symfony-bundle",
@@ -16,7 +16,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Dvs\\Core\\ConfigBundle\\": "src"
+            "Dvs\\ConfigBundle\\": "src"
         }
     },
     "config": {

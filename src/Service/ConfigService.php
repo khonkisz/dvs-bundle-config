@@ -1,9 +1,8 @@
 <?php
 
-namespace Dvs\Core\ConfigBundle\Service;
+namespace Dvs\ConfigBundle\Service;
 
-use Doctrine\ORM\EntityManager;
-use Dvs\Core\ConfigBundle\Entity\Setting;
+use Doctrine\ORM\EntityRepository;
 
 class ConfigService
 {
@@ -15,11 +14,10 @@ class ConfigService
     /**
      * Config constructor.
      *
-     * @param EntityManager $em
+     * @param EntityRepository $settingsRepository
      */
-    public function __construct(EntityManager $em)
+    public function __construct(EntityRepository $settingsRepository)
     {
-        $settingsRepository = $em->getRepository(Setting::class);
         $settings = $settingsRepository->findAll();
 
         $this->config = $this->parseConfig($settings);
@@ -41,7 +39,7 @@ class ConfigService
     }
 
     /**
-     * @param array|\Dvs\Core\ConfigBundle\Entity\Setting[] $settings
+     * @param array|\Dvs\ConfigBundle\Entity\Setting[] $settings
      *
      * @return array
      */

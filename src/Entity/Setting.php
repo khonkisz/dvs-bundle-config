@@ -1,6 +1,6 @@
 <?php
 
-namespace Dvs\Core\ConfigBundle\Entity;
+namespace Dvs\ConfigBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\Timestampable;

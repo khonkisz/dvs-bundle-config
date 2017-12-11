@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Dvs\Core\ConfigBundle\Admin;
+namespace Dvs\ConfigBundle\Admin;
 
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\ListMapper;

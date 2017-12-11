@@ -1,13 +1,12 @@
 <?php
 
-namespace spec\Dvs\Core\ConfigBundle\Service;
+namespace spec\Dvs\ConfigBundle\Service;
 
 use Doctrine\ORM\EntityRepository;
-use Dvs\Core\ConfigBundle\Entity\Setting;
-use Dvs\Core\ConfigBundle\Service\ConfigService;
+use Dvs\ConfigBundle\Entity\Setting;
+use Dvs\ConfigBundle\Service\ConfigService;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
-use Doctrine\ORM\EntityManager;
 
 class ConfigServiceSpec extends ObjectBehavior
 {
@@ -16,15 +15,14 @@ class ConfigServiceSpec extends ObjectBehavior
         $this->shouldHaveType(ConfigService::class);
     }
 
-    public function let(EntityManager $em, EntityRepository $entityRepository)
+    public function let(EntityRepository $entityRepository)
     {
-        $em->getRepository(Setting::class)->willReturn($entityRepository);
         $entityRepository->findAll()->willReturn([
             new Setting('key1', 'value1'),
             new Setting('key2', 'value2'),
         ]);
 
-        $this->beConstructedWith($em);
+        $this->beConstructedWith($entityRepository);
     }
 
     public function it_should_return_default_if_config_not_exists()
