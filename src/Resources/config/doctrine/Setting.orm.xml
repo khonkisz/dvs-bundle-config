@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:gedmo="http://gediminasm.org/schemas/orm/doctrine-extensions-mapping">
+
+    <entity name="Dvs\ConfigBundle\Entity\Setting" table="settings">
+        <id name="name" type="string" column="name" length="255" />
+        <field name="defaultValue" type="string" length="255" />
+        <field name="currentValue" type="string" length="255"  >
+            <gedmo:versioned/>
+        </field>
+        <field name="description" type="string" length="255" />
+        <field name="createdAt" type="datetime">
+            <gedmo:timestampable on="create"/>
+        </field>
+        <field name="updatedAt" type="datetime" >
+            <gedmo:timestampable on="update"/>
+        </field>
+
+        <gedmo:loggable log-entry-class="Gedmo\Loggable\Entity\LogEntry"/>
+    </entity>
+</doctrine-mapping>
