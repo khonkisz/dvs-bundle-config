@@ -13,6 +13,7 @@
     <services>
         <service id="Dvs\ConfigBundle\Service\ConfigService">
             <argument type="service" id="Dvs\ConfigBundle\Service\ConfigService"/>
+            <argument type="service" id="doctrine.orm.entity_manager"/>
         </service>
     </services>
 
