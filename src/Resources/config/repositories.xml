@@ -10,8 +10,8 @@
     </imports>
 
     <services>
-        <service id="Dvs\ConfigBundle\Service\ConfigService">
-            <factory class="doctrine.orm.entity_manager" method="getRepository" />
+        <service id="Dvs\ConfigBundle\Repository\SettingRepository">
+            <factory class="Doctrine\ORM\EntityManager" method="getRepository" />
             <argument type="string" id="Dvs\ConfigBundle\Entity\Setting"/>
         </service>
     </services>
