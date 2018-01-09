@@ -25,7 +25,7 @@ class ConfigService
     public function __construct(EntityRepository $settingsRepository, EntityManager $em)
     {
         $settings = $settingsRepository->findAll();
-        $this->config = $this->parseConfig($settings);
+        $this->config = $this->getParsedConfig($settings);
 
         $this->em = $em;
     }
@@ -38,13 +38,10 @@ class ConfigService
      */
     public function get(string $name, $default = null)
     {
-        if (isset($this->config[$name]) && $this->config[$name] != null) {
-            return $this->config[$name];
+        if (isset($this->config[$name])) {
+            return $this->config[$name]->getCurrentValue();
         } else {
-            $newSetting = new Setting($name, $default);
-            $newSetting->setDefaultValue($default);
-
-            $this->save($newSetting);
+            $this->add(new Setting($name, $default));
 
             return $default;
         }
@@ -55,13 +52,29 @@ class ConfigService
      *
      * @return bool
      */
-    public function set(Setting $setting)
+    public function add(Setting $setting)
     {
         if (isset($this->config[$setting->getName()])) {
             return false;
         } else {
+            $setting->setDefaultValue($setting->getCurrentValue());
+
             $this->save($setting);
+
             return true;
+        }
+    }
+
+    /**
+     * @param string $name
+     * @param $value
+     */
+    public function set(string $name, $value){
+        if (isset($this->config[$name])) {
+            $this->config[$name]->setCurrentValue($value);
+            $this->em->flush();
+        } else {
+            $this->add(new Setting($name, $value));
         }
     }
 
@@ -70,11 +83,11 @@ class ConfigService
      *
      * @return array
      */
-    private function parseConfig($settings)
+    private function getParsedConfig($settings)
     {
         $parsedConfig = [];
         foreach ($settings as $setting) {
-            $parsedConfig[$setting->getName()] = $setting->getCurrentValue();
+            $parsedConfig[$setting->getName()] = $setting;
         }
 
         return $parsedConfig;
@@ -85,6 +98,8 @@ class ConfigService
      */
     protected function save(Setting $newSetting)
     {
+        $this->config[$newSetting->getName()] = $newSetting;
+
         $this->em->persist($newSetting);
         $this->em->flush($newSetting);
     }
