@@ -9,7 +9,7 @@
         <field name="currentValue" type="string" length="255"  >
             <gedmo:versioned/>
         </field>
-        <field name="description" type="string" length="255" />
+        <field name="description" type="string" length="255" nullable="true"/>
         <field name="createdAt" type="datetime">
             <gedmo:timestampable on="create"/>
         </field>

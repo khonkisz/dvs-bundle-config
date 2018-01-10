@@ -11,8 +11,8 @@
 
     <services>
         <service id="Dvs\ConfigBundle\Repository\SettingRepository">
-            <factory class="Doctrine\ORM\EntityManager" method="getRepository" />
-            <argument type="string" id="Dvs\ConfigBundle\Entity\Setting"/>
+            <factory service="Doctrine\ORM\EntityManagerInterface" method="getRepository" />
+            <argument type="string" >Dvs\ConfigBundle\Entity\Setting</argument>
         </service>
     </services>
 
