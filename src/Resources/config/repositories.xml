@@ -5,14 +5,10 @@
            xsi:schemaLocation="http://symfony.com/schema/dic/services
         http://symfony.com/schema/dic/services/services-1.0.xsd">
 
-    <imports>
-        <import resource="admin.xml"/>
-    </imports>
-
     <services>
         <service id="Dvs\ConfigBundle\Repository\SettingRepository">
-            <factory class="Doctrine\ORM\EntityManager" method="getRepository" />
-            <argument type="string" id="Dvs\ConfigBundle\Entity\Setting"/>
+            <factory service="Doctrine\ORM\EntityManagerInterface" method="getRepository" />
+            <argument >Dvs\ConfigBundle\Entity\Setting</argument>
         </service>
     </services>
 
