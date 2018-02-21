@@ -8,6 +8,7 @@
     <imports>
         <import resource="admin.xml"/>
         <import resource="repositories.xml"/>
+        <import resource="twig_extensions.xml"/>
     </imports>
 
     <services>
