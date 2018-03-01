@@ -26,13 +26,13 @@ class ConfigServiceSpec extends ObjectBehavior
         $this->beConstructedWith($entityRepository, $entityManager);
     }
 
-    public function it_should_return_default_if_config_not_exists()
+    public function it_should_return_default_setting_value_if_not_exists()
     {
         $defaultValue = 'defaultValue';
         $this->get('badKey', $defaultValue)->shouldReturn($defaultValue);
     }
 
-    public function it_should_create_setting_if_config_not_exists(EntityManager $entityManager)
+    public function it_should_create_setting_if_not_exists(EntityManager $entityManager)
     {
         $defaultValue = 'defaultValue';
         $badKey = 'badKey';
@@ -44,17 +44,18 @@ class ConfigServiceSpec extends ObjectBehavior
         $entityManager->flush($setting)->shouldHaveBeenCalled();
     }
 
-    public function it_should_return_correct_config_value()
+    public function it_should_return_correct_setting_value()
     {
         $this->get('key1', 'default')->shouldReturn('value1');
         $this->get('key2', 'default')->shouldReturn('value2');
     }
 
-    public function it_should_return_false_if_setting_existing_key()
+    public function it_should_update_setting_if_already_exist(EntityManager $entityManager)
     {
-        $setting = new Setting('key1', 'example');
+        $this->set('key1', 'example');
+        $this->get('key1')->shouldReturn('example');
 
-        $this->set($setting)->shouldReturn(false);
+        $entityManager->flush()->shouldHaveBeenCalled();
     }
 
     public function it_should_set_new_setting(EntityManager $entityManager)
@@ -62,7 +63,8 @@ class ConfigServiceSpec extends ObjectBehavior
         $setting = new Setting('new', $value = 'example');
         $setting->setDefaultValue($value);
 
-        $this->set($setting)->shouldReturn(true);
+        $this->set('new', 'example');
+        $this->get('new')->shouldReturn('example');
 
         $entityManager->persist($setting)->shouldHaveBeenCalled();
         $entityManager->flush($setting)->shouldHaveBeenCalled();
