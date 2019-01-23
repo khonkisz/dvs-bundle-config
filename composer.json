@@ -6,7 +6,6 @@
     "license": "MIT",
     "require": {
         "php": ">=7.0",
-        "symfony/symfony": "~3.3.0",
         "doctrine/orm": "^2.5",
         "sonata-project/admin-bundle": "^3.31",
         "stof/doctrine-extensions-bundle": "^1.2",
